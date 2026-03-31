@@ -1,0 +1,56 @@
+<div class="login-container">
+  <div class="login-brand">
+    <div class="brand-logo">
+      <mat-icon>casino</mat-icon>
+    </div>
+    <h2>iGaming Back Office</h2>
+    <p>Integration Management Platform</p>
+  </div>
+
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Sign In</mat-card-title>
+      <mat-card-subtitle>Enter your credentials to access the platform</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email Address</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="admin@igaming.com" autocomplete="email">
+          <mat-icon matPrefix>email</mat-icon>
+          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+            <mat-error>{{ emailError }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" autocomplete="current-password">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+            <mat-error>{{ passwordError }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="demo-hint">
+          <mat-icon>info</mat-icon>
+          <span>Demo: admin&#64;igaming.com / admin123</span>
+        </div>
+
+        <button mat-flat-button color="primary" type="submit"
+          class="full-width login-btn"
+          [disabled]="loginForm.invalid || isLoading">
+          @if (isLoading) {
+            <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+            Sign In
+          }
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

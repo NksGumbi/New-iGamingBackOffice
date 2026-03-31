@@ -1,0 +1,47 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <mat-icon class="logo-icon">casino</mat-icon>
+      <span class="logo-text">iGaming BO</span>
+    </div>
+    @if (currentUser) {
+      <div class="user-info">
+        <div class="user-avatar">{{ currentUser.firstName[0] }}{{ currentUser.lastName[0] }}</div>
+        <div class="user-details">
+          <span class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+          <span class="user-role">{{ currentUser.role }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <nav class="sidebar-nav">
+    @for (item of navItems; track item.label) {
+      @if (item.route) {
+        <a class="nav-item"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          (click)="closeSidenav.emit()">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      } @else {
+        <mat-expansion-panel class="nav-group" [expanded]="false">
+          <mat-expansion-panel-header>
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span>{{ item.label }}</span>
+          </mat-expansion-panel-header>
+          @for (child of item.children; track child.label) {
+            <a class="nav-child"
+              [routerLink]="child.route"
+              routerLinkActive="active"
+              (click)="closeSidenav.emit()">
+              <mat-icon>{{ child.icon }}</mat-icon>
+              <span>{{ child.label }}</span>
+            </a>
+          }
+        </mat-expansion-panel>
+      }
+    }
+  </nav>
+</div>
